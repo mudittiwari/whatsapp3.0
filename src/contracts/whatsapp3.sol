@@ -35,6 +35,7 @@ contract whatsapp3
     {
         address[] friends;
         string[] stories;
+        address[] friends_requests;
         mapping(address => Message[]) messages;
         profile profile;
     }
@@ -53,6 +54,10 @@ contract whatsapp3
     function add_friend(address user_address, address friend_address) public
     {
         users[user_address].friends.push(friend_address);
+    }
+    function add_friend_request(address user_address, address friend_address) public
+    {
+        users[user_address].friends_requests.push(friend_address);
     }
     function remove_friend(address user_address, address friend_address) public
     {
