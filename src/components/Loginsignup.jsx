@@ -48,6 +48,7 @@ const LoginSignup = () => {
       if(user.toLowerCase()==account.toString().toLowerCase()){
         let usr=await contract.methods.users(account).call();
         if(usr.name==name){
+          localStorage.setItem('user',usr);
           navigate('/');
         }
       }
@@ -70,7 +71,7 @@ const LoginSignup = () => {
           {isLogin ? (
             <div>
               <label className="block mb-2 text-white">
-                Name
+                Username
                 <input type="text" onChange={(e) => {
                   e.preventDefault();
                   changeName(e.target.value);
@@ -81,7 +82,7 @@ const LoginSignup = () => {
           ) : (
             <div>
               <label className="block mb-2 text-white">
-                Name
+                Username
                 <input onChange={(e) => {
                   e.preventDefault();
                   changeName(e.target.value);

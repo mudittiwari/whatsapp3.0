@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Homepageuser from "./Homepageuser";
 import Navbar from "./Navbar";
+import { useNavigate } from "react-router-dom";
 function Homepage()
 {
+    const navigate=useNavigate();
+    useEffect(()=>{
+        if(localStorage.getItem('user')==null)
+        {
+            navigate('/loginsignup');
+        }
+    })
     const height=window.innerHeight-88;
     return (
         <>
