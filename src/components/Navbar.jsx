@@ -26,7 +26,7 @@ const Navbar = () => {
     const web3 = new Web3(window.ethereum);
 
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    console.log(accounts);
+    // console.log(accounts);
     setaccount(accounts[0])
     const networkId = await web3.eth.net.getId()
     const networkData = whatsapp3.networks[networkId]
@@ -68,8 +68,8 @@ const Navbar = () => {
   //   setCount(count + 1);
   // }
   useEffect(() => {
-    loadWeb3();
-    loadblockchaindata();
+    // loadWeb3();
+    // loadblockchaindata();
   }, [])
   return (
 
@@ -88,7 +88,12 @@ const Navbar = () => {
                   <img className="w-10 h-10 rounded-full mr-4" src="https://randomuser.me/api/portraits/men/1.jpg" alt="User" />
                   <div className="text-lg font-medium text-white">{userprofiles[user][0]}</div>
                 </div>
-                <button onClick={() => setIsOpen(false)} className=" text-white px-3 py-2 rounded-md" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }}>Add Friend</button>
+                <button onClick={async(e) => {
+                  e.preventDefault();
+                  await contract.methods.add_friend_request(account,user).send({ from: account }).on('receipt', function (receipt) {
+                    console.log(receipt);
+                  });;
+                }} className=" text-white px-3 py-2 rounded-md" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }}>Add Friend</button>
               </div>
             })}
 

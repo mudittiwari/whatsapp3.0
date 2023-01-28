@@ -7,6 +7,7 @@ import StoriesPage from './components/Storiespage';
 import LoginSignup from './components/Loginsignup';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Homepage from './components/Homepage';
+import Allusers from './components/Allusers';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route exact path="/" element={<Homepage />} />
           <Route exact path="/stories" element={<StoriesPage />} />
           <Route exact path="/loginsignup" element={<LoginSignup />} />
+          <Route exact path="/allusers" element={<Allusers />} />
           <Route exact path="/chat" element={<Chatbox />} />
 
           

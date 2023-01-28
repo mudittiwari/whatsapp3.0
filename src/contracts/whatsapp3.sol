@@ -51,14 +51,13 @@ contract whatsapp3
         users_addresses.push(user_address);
         emit user_added(user_address, name, profile_picture, last_seen,msg.sender);
     }
+    event friend_added(address user_address, address friend_address, address author);
     function add_friend(address user_address, address friend_address) public
     {
         users[user_address].friends.push(friend_address);
+        emit friend_added(user_address, friend_address, msg.sender);
     }
-    function add_friend_request(address user_address, address friend_address) public
-    {
-        users[user_address].friends_requests.push(friend_address);
-    }
+     event friend_removed(address user_address, address friend_address, address author);
     function remove_friend(address user_address, address friend_address) public
     {
         for(uint i=0; i<users[user_address].friends.length; i++)
@@ -70,14 +69,56 @@ contract whatsapp3
                 break;
             }
         }
+        emit friend_removed(user_address, friend_address, msg.sender);
     }
+    event friend_request_added(address user_address, address friend_address, address author);
+    function add_friend_request(address user_address, address friend_address) public
+    {
+        users[user_address].friends_requests.push(friend_address);
+        emit friend_request_added(user_address, friend_address, msg.sender);
+    }
+    event friend_request_accepted(address user_address, address friend_address, address author);
+    function accept_friend_request(address user_address, address friend_address) public
+    {
+        for(uint i=0; i<users[user_address].friends_requests.length; i++)
+        {
+            if(users[user_address].friends_requests[i] == friend_address)
+            {
+                users[user_address].friends_requests[i] = users[user_address].friends_requests[users[user_address].friends_requests.length-1];
+                users[user_address].friends_requests.pop();
+                break;
+            }
+        }
+        users[user_address].friends.push(friend_address);
+        users[friend_address].friends.push(user_address);
+        emit friend_request_accepted(user_address, friend_address, msg.sender);
+    }
+    event friend_request_rejected(address user_address, address friend_address, address author);
+    function reject_friend_request(address user_address, address friend_address) public
+    {
+        for(uint i=0; i<users[user_address].friends_requests.length; i++)
+        {
+            if(users[user_address].friends_requests[i] == friend_address)
+            {
+                users[user_address].friends_requests[i] = users[user_address].friends_requests[users[user_address].friends_requests.length-1];
+                users[user_address].friends_requests.pop();
+                break;
+            }
+        }
+        emit friend_request_rejected(user_address, friend_address, msg.sender);
+    }
+   
+    event story_added(address user_address, string story, address author);
     function add_story(address user_address, string memory story) public
     {
         users[user_address].stories.push(story);
+        emit story_added(user_address, story, msg.sender);
     }
+    event message_added(address user_address, address friend_address, string message, string date, string time, bool seen_status, address author);
     function add_message(address user_address, address friend_address, string memory message_, string memory date, string memory time, bool seen_status) public
     {
         users[user_address].messages[friend_address].push(Message(message_, date, time, seen_status));
+        emit message_added(user_address, friend_address, message_, date, time, seen_status, msg.sender);
     }
     function getmessages(address user_address, address friend_address) public view returns(Message[] memory)
     {
@@ -91,7 +132,11 @@ contract whatsapp3
     {
         return users[user_address].stories;
     }
-
+    function getfriends_requests(address user_address) public view returns(address[] memory)
+    {
+        return users[user_address].friends_requests;
+    }
+    
     function search_user(address user_address, string memory name) public view returns(address[] memory)
     {
         address[] memory friends = users[user_address].friends;
