@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 const Chatbox = () => {
+    const location = useLocation();
     const height=window.innerHeight-88-56;
     const containerRef = useRef(null);
     function scrolltobottom()
@@ -11,6 +13,7 @@ const Chatbox = () => {
     }
     useEffect(() => {
        scrolltobottom();
+      //  console.log(location.state)
       },);
   const [messages, setMessages] = useState([
     {
@@ -57,7 +60,7 @@ const Chatbox = () => {
     <div className="flex items-center justify-between">
     <div className="flex items-center">
                     <img className="w-10 h-10 rounded-full mr-4" src="https://randomuser.me/api/portraits/men/1.jpg" alt="User"/>
-                    <div className="text-lg font-medium text-white">Mudit Tiwari</div>
+                    <div className="text-lg font-medium text-white">{location.state.name}</div>
                 </div>
        
     </div>

@@ -36,20 +36,22 @@ function Allusers() {
             setcontract(whatsapp3_);
             let users = await whatsapp3_.methods.getusers().call();
             let userprofiles = {};
-            await users.map(async (user) => {
+
+            users.map(async (user,index) => {
                 await whatsapp3_.methods.users(user).call().then(async (usr) => {
                     let friendsrequest = await whatsapp3_.methods.getfriends_requests(user).call();
                     friendsrequest = friendsrequest.map((friend) => friend.toLowerCase());
                     userprofiles[`${user}`] = [usr, friendsrequest];
-                    // console.log(friendsrequest);
-                    // setuserprofiles(userprofiles)
                 })
-                setuserprofiles(userprofiles)
-                let friends = await whatsapp3_.methods.getfriends(accounts[0]).call();
+                if(index==(users.length-1))
+                    setuserprofiles(userprofiles)
+                
+                
+            })
+            let friends = await whatsapp3_.methods.getfriends(accounts[0]).call();
                 let friendsrequest = await whatsapp3_.methods.getfriends_requests(accounts[0]).call();
                 setfriends(friends)
                 setfriendsrequest(friendsrequest)
-            })
 
         } else {
             window.alert('whatsapp3 contract not deployed to detected network.')
@@ -62,7 +64,7 @@ function Allusers() {
     async function loadchange() {
         let users = await contract.methods.getusers().call();
         let userprofiles = {};
-        users.map(async (user) => {
+        users.map(async (user,index) => {
             await contract.methods.users(user).call().then(async (usr) => {
                 let friendsrequest = await contract.methods.getfriends_requests(user).call();
                 friendsrequest = friendsrequest.map((friend) => friend.toLowerCase());
@@ -70,12 +72,14 @@ function Allusers() {
                 // console.log(friendsrequest);
                 // setuserprofiles(userprofiles)
             })
-            setuserprofiles(userprofiles)
-            let friends = await contract.methods.getfriends(account).call();
-            let friendsrequest = await contract.methods.getfriends_requests(account).call();
-            setfriends(friends)
-            setfriendsrequest(friendsrequest)
+            if(index==(users.length-1))
+                setuserprofiles(userprofiles)
+           
         })
+        let friends = await contract.methods.getfriends(account).call();
+        let friendsrequest = await contract.methods.getfriends_requests(account).call();
+        setfriends(friends)
+        setfriendsrequest(friendsrequest)
         // console.log(userprofiles)
 
     }

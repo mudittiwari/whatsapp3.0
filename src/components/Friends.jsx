@@ -31,15 +31,18 @@ function Friends() {
             const whatsapp3_ = new web3.eth.Contract(whatsapp3.abi, networkData.address);
             setcontract(whatsapp3_);
             let friends = await whatsapp3_.methods.getfriends(accounts[0]).call();
-            let friendsprofile = {};
-            await friends.map(async (user) => {
-                await whatsapp3_.methods.users(user).call().then(async (usr) => {
-                   
-                    friendsprofile[`${user}`] = usr;
-                })
-                setfriendsprofiles(friendsprofile)
+            let friendsprofile={};
+            friends.map(async (user,index) => {
+                let usr=await whatsapp3_.methods.users(user).call(); 
+                friendsprofile[`${user}`] = [usr,user];
+                if(index==(friends.length-1))
+                    // console.log("mudit tiwari")
+                    setfriendsprofiles(friendsprofile)
                
             })
+            // setfriendsprofiles(friendsprofile)
+            // console.log(friendsprofile)
+            // console.log("mudit tiwari")
             
 
         } else {
@@ -50,26 +53,6 @@ function Friends() {
         loadWeb3();
         loadblockchaindata();
     }, [])
-    // async function loadchange() {
-    //     let users = await contract.methods.getusers().call();
-    //     let userprofiles = {};
-    //     users.map(async (user) => {
-    //         await contract.methods.users(user).call().then(async (usr) => {
-    //             let friendsrequest = await contract.methods.getfriends_requests(user).call();
-    //             friendsrequest = friendsrequest.map((friend) => friend.toLowerCase());
-    //             userprofiles[`${user}`] = [usr, friendsrequest];
-    //             // console.log(friendsrequest);
-    //             // setuserprofiles(userprofiles)
-    //         })
-    //         setuserprofiles(userprofiles)
-    //         let friends = await contract.methods.getfriends(account).call();
-    //         let friendsrequest = await contract.methods.getfriends_requests(account).call();
-    //         setfriends(friends)
-    //         setfriendsrequest(friendsrequest)
-    //     })
-    //     // console.log(userprofiles)
-
-    // }
     const height = window.innerHeight - 88;
     return (
         <>
@@ -86,10 +69,10 @@ function Friends() {
                 {Object.keys(friendsprofiles).map((user) => {
                     // console.log(userprofiles)
                     // console.log(userprofiles[user][1])
-                    if (friendsprofiles[user][0].toLowerCase().includes(searchtext.toLowerCase()))
-                        return <Friendscomp name={friendsprofiles[user][0]} key={friendsprofiles[user][0]} status={
+                    if (friendsprofiles[user][0][0].toLowerCase().includes(searchtext.toLowerCase()))
+                        return <Friendscomp name={friendsprofiles[user][0][0]} key={friendsprofiles[user][0][0]} status={
                             "chat"
-                        } contract={contract} account={account} user={user} />
+                        } contract={contract} account={account} user={friendsprofiles[user]}  />
                 })
                 }
             </main>

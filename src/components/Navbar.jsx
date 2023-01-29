@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Web3 from 'web3';
 import { useState } from 'react';
 const Navbar = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
   const [account, setaccount] = useState('')
@@ -55,18 +56,6 @@ const Navbar = () => {
       window.alert('whatsapp3 contract not deployed to detected network.')
     }
   }
-  // async function loadallusers() {
-  //   let users = await contract.methods.getusers().call();
-  //   let userprofiles = {};
-  //   await users.map(async (user) => {
-  //     let usr = await contract.methods.users(user).call();
-  //     userprofiles[`${user}`] = usr;
-  //   }
-
-  //   )
-  //   setuserprofiles(userprofiles);
-  //   setCount(count + 1);
-  // }
   useEffect(() => {
     // loadWeb3();
     // loadblockchaindata();
@@ -78,7 +67,7 @@ const Navbar = () => {
 
 
       <div className="flex items-center justify-between">
-        <div className="text-lg font-medium text-white" onClick={(e)=>
+        <div className="text-lg font-medium text-white cursor-pointer" onClick={(e)=>
         {
           e.preventDefault();
           navigate('/');
@@ -95,12 +84,24 @@ const Navbar = () => {
             // loadallusers();
           }} className=" text-white px-3 py-2 rounded-md ml-4" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }}>Community</button>
           <button className=" text-white px-3 py-2 rounded-md ml-4" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }}>Stories</button>
-          <button className=" text-white px-3 py-2 rounded-md ml-4" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }}>Settings</button>
+          <button className=" text-white px-3 py-2 rounded-md ml-4" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }} onClick={(e)=>{
+            e.preventDefault();
+            setShowDropdown(!showDropdown)
+          }}>Settings</button>
+          {showDropdown && (
+        <div className="absolute flex flex-col items-start right-0 mr-6 mt-36 z-50 w-48 shadow-xl py-2 rounded-lg" style={{'backgroundColor':'rgb(37, 40, 42)'}}>
+          <button onClick={(e) => {
+            e.preventDefault();
+            navigate('/profile');
+          }} className=" text-white px-3 py-2 rounded-md">Profile</button>
           <button onClick={(e) => {
             e.preventDefault();
             localStorage.removeItem('user');
             navigate('/loginsignup');
-          }} className=" text-white px-3 py-2 rounded-md ml-4" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }}>Logout</button>
+          }} className=" text-white px-3 py-2 rounded-md">Logout</button>
+        </div>
+      )}
+          
         </div>
       </div>
     </header>

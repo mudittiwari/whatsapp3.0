@@ -14,7 +14,7 @@ function Friendscomp(props)
                 </div>
                 <button onClick={async(e) => {
                   e.preventDefault();
-                  navigate('/chat')
+                  navigate('/chat',{state:{userprofile:props.user,account:props.account.toString(),name:props.name.toString()}})
                 }} className=" text-white px-3 py-2 rounded-md" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }}>{props.status}</button>
             </div>
             {/* <div className="bg-gray-200 rounded-lg p-4 mb-4">
