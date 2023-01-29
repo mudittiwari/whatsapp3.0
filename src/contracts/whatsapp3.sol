@@ -51,6 +51,18 @@ contract whatsapp3
         users_addresses.push(user_address);
         emit user_added(user_address, name, profile_picture, last_seen,msg.sender);
     }
+    event userprofilepic_changed(address user_address, string profile_picture, address author);
+    function changeuserprofilepic(address user_address, string memory profile_picture) public
+    {
+        users[user_address].profile.profile_picture = profile_picture;
+        emit userprofilepic_changed(user_address, profile_picture, msg.sender);
+    }
+    event userlastseen_changed(address user_address, string last_seen, address author);
+    function changeuserlastseen(address user_address, string memory last_seen) public
+    {
+        users[user_address].profile.last_seen = last_seen;
+        emit userlastseen_changed(user_address, last_seen, msg.sender);
+    }
     event friend_added(address user_address, address friend_address, address author);
     function add_friend(address user_address, address friend_address) public
     {

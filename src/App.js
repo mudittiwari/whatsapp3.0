@@ -1,3 +1,10 @@
+// work left in this project
+// 1. working Chatbox
+// 2. last seen working
+// 3. profile pic upload
+// 4. stories work
+// 5. add about section in profile section
+
 import logo from './logo.svg';
 import './App.css';
 import Navbar from './components/Navbar';
