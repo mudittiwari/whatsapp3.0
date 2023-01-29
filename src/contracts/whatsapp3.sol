@@ -69,6 +69,15 @@ contract whatsapp3
                 break;
             }
         }
+        for(uint i=0; i<users[friend_address].friends.length; i++)
+        {
+            if(users[friend_address].friends[i] == user_address)
+            {
+                users[friend_address].friends[i] = users[friend_address].friends[users[friend_address].friends.length-1];
+                users[friend_address].friends.pop();
+                break;
+            }
+        }
         emit friend_removed(user_address, friend_address, msg.sender);
     }
     event friend_request_added(address user_address, address friend_address, address author);

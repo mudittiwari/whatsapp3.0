@@ -8,6 +8,7 @@ import LoginSignup from './components/Loginsignup';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Homepage from './components/Homepage';
 import Allusers from './components/Allusers';
+import Friends from './components/Friends';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route exact path="/stories" element={<StoriesPage />} />
           <Route exact path="/loginsignup" element={<LoginSignup />} />
           <Route exact path="/allusers" element={<Allusers />} />
+          <Route exact path="/friends" element={<Friends />} />
           <Route exact path="/chat" element={<Chatbox />} />
 
           

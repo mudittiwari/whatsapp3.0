@@ -1,8 +1,9 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 function Alluserscomp(props)
 {
-    
+    const navigate= useNavigate();
+    // console.log(props.name);
     return (
         <>
             <div className="flex flex-col">
@@ -18,7 +19,8 @@ function Alluserscomp(props)
                     await props.contract.methods.add_friend_request(props.account,props.user).send({ from: props.account }).on('receipt', function (receipt) {
                         console.log(receipt);
     
-                        props.changecount(Math.random()*100)
+                        props.changecontent()
+                        // navigate('/allusers')
                       });
                   }
                     else if(props.status=='Friends')
@@ -26,14 +28,16 @@ function Alluserscomp(props)
                         await props.contract.methods.remove_friend(props.account,props.user).send({ from: props.account }).on('receipt', function (receipt) {
                             console.log(receipt);
         
-                            props.changecount(Math.random()*100)
+                            props.changecontent()
+                            // navigate('/allusers')
                           });
                     }
                     else if(props.status=='Accept Friend Request')
                     {
                         await props.contract.methods.accept_friend_request(props.user,props.account).send({ from: props.account }).on('receipt', function (receipt) {
                             console.log(receipt);
-                            props.changecount(Math.random()*100)
+                            props.changecontent()
+                            // navigate('/allusers')
                           });
                     }
                     else
@@ -41,7 +45,8 @@ function Alluserscomp(props)
                         await props.contract.methods.reject_friend_request(props.account,props.user).send({ from: props.account }).on('receipt', function (receipt) {
                             console.log(receipt);
         
-                            props.changecount(Math.random()*100)
+                            props.changecontent()
+                            // navigate('/allusers')
                           });
                     }
                 }} className=" text-white px-3 py-2 rounded-md" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }}>{props.status}</button>

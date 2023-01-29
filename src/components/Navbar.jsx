@@ -74,75 +74,26 @@ const Navbar = () => {
   return (
 
     <header className="bg-white p-6 w-full" style={{ 'backgroundColor': 'rgb(24, 26, 27)' }}>
-      {isOpen && (
-        <div className="fixed top-0 left-0 h-full w-full flex items-center justify-center">
-          <div className=" p-6 rounded-lg w-1/2 h-80 overflow-y-scroll" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }}>
-            <div className='flex justify-between mb-5 items-center'> <h3 className="text-lg font-medium text-white ">Find People</h3> <button onClick={() => setIsOpen(false)} className=" text-white px-3 py-2 rounded-md" style={{ 'backgroundColor': 'rgb(24, 26, 27)' }}>Close</button></div>
-            <div className=" p-2 mb-5" style={{ 'backgroundColor': 'rgb(24, 26, 27)' }}>
-              <input type="text" placeholder="Search a user" className=" text-white p-2 rounded-lg w-full" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }} />
-            </div>
-            {Object.keys(userprofiles).map((user) => {
-              if(user.toLowerCase()!=account.toString().toLowerCase())
-              return <div key={user} className="bg-white rounded-lg p-4 mb-4 cursor-pointer flex justify-between" style={{ 'backgroundColor': 'rgb(24, 26, 27)' }} >
-                <div className="flex items-center">
-                  <img className="w-10 h-10 rounded-full mr-4" src="https://randomuser.me/api/portraits/men/1.jpg" alt="User" />
-                  <div className="text-lg font-medium text-white">{userprofiles[user][0]}</div>
-                </div>
-                <button onClick={async(e) => {
-                  e.preventDefault();
-                  await contract.methods.add_friend_request(account,user).send({ from: account }).on('receipt', function (receipt) {
-                    console.log(receipt);
-                  });;
-                }} className=" text-white px-3 py-2 rounded-md" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }}>Add Friend</button>
-              </div>
-            })}
-
-
-          </div>
-        </div>
-      )}
-
-
-
-{isOpenfriends && (
-        <div className="fixed top-0 left-0 h-full w-full flex items-center justify-center">
-          <div className=" p-6 rounded-lg w-1/2 h-80 overflow-y-scroll" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }}>
-            <div className='flex justify-between mb-5 items-center'> <h3 className="text-lg font-medium text-white ">Find Friends</h3> <button onClick={() => setIsOpenfriends(false)} className=" text-white px-3 py-2 rounded-md" style={{ 'backgroundColor': 'rgb(24, 26, 27)' }}>Close</button></div>
-            <div className=" p-2 mb-5" style={{ 'backgroundColor': 'rgb(24, 26, 27)' }}>
-              <input type="text" placeholder="Search a friend" className=" text-white p-2 rounded-lg w-full" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }} />
-            </div>
-            {Object.keys(friendsprofiles).map((user) => {
-              if(user.toLowerCase()!=account.toString().toLowerCase())
-              return <div key={user} className="bg-white rounded-lg p-4 mb-4 cursor-pointer flex justify-between" style={{ 'backgroundColor': 'rgb(24, 26, 27)' }} >
-                <div className="flex items-center">
-                  <img className="w-10 h-10 rounded-full mr-4" src="https://randomuser.me/api/portraits/men/1.jpg" alt="User" />
-                  <div className="text-lg font-medium text-white">{friendsprofiles[user][0]}</div>
-                </div>
-                <button onClick={() => setIsOpen(false)} className=" text-white px-3 py-2 rounded-md" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }}>Start Chat</button>
-              </div>
-            })}
-
-
-          </div>
-        </div>
-      )}
-
-
+      
 
 
       <div className="flex items-center justify-between">
-        <div className="text-lg font-medium text-white">WhatsApp 3.0</div>
+        <div className="text-lg font-medium text-white" onClick={(e)=>
+        {
+          e.preventDefault();
+          navigate('/');
+        }}>WhatsApp 3.0</div>
         <div className="flex items-center">
           <button className=" text-white px-3 py-2 rounded-md" onClick={(e) => {
             e.preventDefault();
-            setIsOpenfriends(true);
+            navigate('/friends')
             // loadallusers();
           }} style={{ 'backgroundColor': 'rgb(37, 40, 42)' }}>New Chat</button>
           <button onClick={(e) => {
             e.preventDefault();
-            setIsOpen(true);
+            navigate('/allusers');
             // loadallusers();
-          }} className=" text-white px-3 py-2 rounded-md ml-4" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }}>Find Friends</button>
+          }} className=" text-white px-3 py-2 rounded-md ml-4" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }}>Community</button>
           <button className=" text-white px-3 py-2 rounded-md ml-4" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }}>Stories</button>
           <button className=" text-white px-3 py-2 rounded-md ml-4" style={{ 'backgroundColor': 'rgb(37, 40, 42)' }}>Settings</button>
           <button onClick={(e) => {
